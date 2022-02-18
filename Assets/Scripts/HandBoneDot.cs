@@ -9,7 +9,7 @@ public class HandBoneDot : MonoBehaviour
     // Start is called before the first frame update
     public List<BoneDot> _boneDots;
     public List<FingerDot> _fingerDots;
-    public enum FingerIndex {Thumb, Index, Middle, Ring, Pinky};
+    public enum FingerIndex { Thumb, Index, Middle, Ring, Pinky };
     public Transform handCenter;
     private OVRSkeleton _ovrSkeleton;
     private bool _isInitialized;
@@ -32,7 +32,7 @@ public class HandBoneDot : MonoBehaviour
 
     public class BoneDot
     {
-        Transform BoneBegin,BoneMiddle,BoneEnd;
+        Transform BoneBegin, BoneMiddle, BoneEnd;
         public float dot;
         public BoneDot(Transform begin, Transform middle, Transform end)
         {
@@ -45,7 +45,7 @@ public class HandBoneDot : MonoBehaviour
 
         public void Update()
         {
-            dot = Vector3.Dot((BoneMiddle.position - BoneBegin.position).normalized,(BoneEnd.position - BoneMiddle.position).normalized);
+            dot = Vector3.Dot((BoneMiddle.position - BoneBegin.position).normalized, (BoneEnd.position - BoneMiddle.position).normalized);
 
         }
     }
@@ -68,7 +68,7 @@ public class HandBoneDot : MonoBehaviour
 
     private void Awake()
     {
-        if(_ovrSkeleton == null)
+        if (_ovrSkeleton == null)
         {
             _ovrSkeleton = GetComponent<OVRSkeleton>();
         }
@@ -76,8 +76,8 @@ public class HandBoneDot : MonoBehaviour
 
     private void Start()
     {
-        
-        if(_ovrSkeleton == null)
+
+        if (_ovrSkeleton == null)
         {
             this.enabled = false;
             return;
@@ -88,7 +88,7 @@ public class HandBoneDot : MonoBehaviour
 
     private void Initialize()
     {
-        //Debug.Log("hello");
+
         _boneDots = new List<BoneDot>();
         _fingerDots = new List<FingerDot>();
         _ovrSkeleton = GetComponent<OVRSkeleton>();
@@ -116,11 +116,17 @@ public class HandBoneDot : MonoBehaviour
         }
 
         _isInitialized = true;
+
+        //Debug.Log("hello");
+        //Debug.Log(_ovrSkeleton.Bones[4].Transform.position);
     }
 
     public void Update()
     {
         //Debug.Log(_ovrSkeleton.Bones.Count);
+
+        //Debug.Log("update");
+        //Debug.Log(_ovrSkeleton.Bones[4].Transform.position);
         if (_isInitialized)
         {
             for (int i = 0; i < _boneDots.Count; i++)
@@ -128,10 +134,9 @@ public class HandBoneDot : MonoBehaviour
             for (int i = 0; i < _fingerDots.Count; i++)
                 _fingerDots[i].Update();
             this.handCenter = _ovrSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_Middle1].Transform;
-        }else if(_ovrSkeleton.Bones.Count > 0)
+        }
+        else if (_ovrSkeleton.Bones.Count > 0)
             Initialize();
-        
-        
-        
+
     }
 }

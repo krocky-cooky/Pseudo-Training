@@ -5,12 +5,16 @@ using UnityEngine;
 public class HandGeneral : MonoBehaviour
 {
 
-    private int rightHandGesture,leftHandGesture;
+    private int rightHandGesture, leftHandGesture;
     public Vector3 handCenterPosition;
+    public Vector3 rightHandCenterPosition;
+    public Vector3 leftHandCenterPosition;
     public Vector3 handCenterPositionOrigin;
-    public GameObject rightHandPrefab,leftHandPrefab;
-    public bool isTraining,trainingChangeWaiting;
-    [SerializeField] float trainingStartWaitTime = 2f,trainingStopWaitTime = 2f;
+    public Vector3 rightHandCenterPositionOrigin;
+    public Vector3 leftHandCenterPositionOrigin;
+    public GameObject rightHandPrefab, leftHandPrefab;
+    public bool isTraining, trainingChangeWaiting;
+    [SerializeField] float trainingStartWaitTime = 2f, trainingStopWaitTime = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,23 +27,25 @@ public class HandGeneral : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         rightHandGesture = rightHandPrefab.GetComponent<HandSignDetector>().sign;
         leftHandGesture = leftHandPrefab.GetComponent<HandSignDetector>().sign;
-        
+
         Transform rightHandCenterTransform = rightHandPrefab.GetComponent<HandBoneDot>().handCenter;
-        Transform leftHandCenterTransform =  leftHandPrefab.GetComponent<HandBoneDot>().handCenter;
-        
-        this.handCenterPosition = (rightHandCenterTransform.position + leftHandCenterTransform.position)/2;
+        Transform leftHandCenterTransform = leftHandPrefab.GetComponent<HandBoneDot>().handCenter;
+
+        this.handCenterPosition = (rightHandCenterTransform.position + leftHandCenterTransform.position) / 2;
+        this.rightHandCenterPosition = rightHandCenterTransform.position;
+        this.leftHandCenterPosition = leftHandCenterTransform.position;
         //Debug.Log(rightHandGesture);
-        Debug.Log(new Vector2(rightHandGesture,leftHandGesture));
-        
-        
-        if(rightHandGesture == 0 && leftHandGesture == 0 && !isTraining && !trainingChangeWaiting)
+        Debug.Log(new Vector2(rightHandGesture, leftHandGesture));
+
+
+        if (rightHandGesture == 0 && leftHandGesture == 0 && !isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStartWait(trainingStartWaitTime));
-        else if(rightHandGesture == 2 && leftHandGesture == 2 && isTraining && !trainingChangeWaiting)
+        else if (rightHandGesture == 2 && leftHandGesture == 2 && isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStopWait(trainingStopWaitTime));
-        
+
     }
 
     IEnumerator TrainingStartWait(float waitime)
@@ -48,8 +54,8 @@ public class HandGeneral : MonoBehaviour
         trainingChangeWaiting = true;
         while (Time.time < t + waitime)
         {
-            
-            if(!(rightHandGesture == 0 && leftHandGesture == 0))
+
+            if (!(rightHandGesture == 0 && leftHandGesture == 0))
             {
                 this.isTraining = false;
                 trainingChangeWaiting = false;
@@ -57,10 +63,12 @@ public class HandGeneral : MonoBehaviour
             }
             //Debug.Log("Starting");
             yield return null;
-            
+
         }
         this.isTraining = true;
         handCenterPositionOrigin = handCenterPosition;
+        rightHandCenterPositionOrigin = rightHandCenterPosition;
+        leftHandCenterPositionOrigin = leftHandCenterPosition;
         trainingChangeWaiting = false;
         Debug.Log("Training start");
 
@@ -72,7 +80,7 @@ public class HandGeneral : MonoBehaviour
         trainingChangeWaiting = true;
         while (Time.time < t + waitime)
         {
-            if(!(rightHandGesture == 2 && leftHandGesture == 2))
+            if (!(rightHandGesture == 2 && leftHandGesture == 2))
             {
                 this.isTraining = true;
                 trainingChangeWaiting = false;

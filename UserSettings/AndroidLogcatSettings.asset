@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "1WMHH812YX0455",
+    "m_SelectedDeviceId": "1WMHH827260423",
     "m_SelectedPackage": {
-        "deviceId": "1WMHH812YX0455",
+        "deviceId": "1WMHH827260423",
         "name": "com.DefaultCompany.oculusbuildtest",
-        "processId": 25048,
+        "processId": 29120,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,13 +11,73 @@
         {
             "deviceId": "1WMHH827260423",
             "name": "com.DefaultCompany.oculusbuildtest",
-            "processId": 7242,
+            "processId": 30995,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 32180,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 819,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 11598,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.oculus.os.clearactivity",
+            "processId": 14609,
             "exited": false
         },
         {
             "deviceId": "1WMHH827260423",
             "name": "com.DefaultCompany.oculusbuildtest",
-            "processId": 11624,
+            "processId": 20510,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 22909,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 24937,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 26880,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 28357,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 28745,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 29120,
             "exited": false
         },
         {

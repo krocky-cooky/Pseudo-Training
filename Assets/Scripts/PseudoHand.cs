@@ -7,9 +7,11 @@ public class PseudoHand : MonoBehaviour
 
     public Transform handCenter;
     public GameObject ovrCameraRig;
+    public GameObject OVRHandPrefab;
     private Transform pseudoHandTransform;
     private MeshRenderer pseudoHandRenderer;
     private HandGeneral _handGeneral;
+
     [SerializeField] float pseudoRange = 2.0f;
 
     // Start is called before the first frame update
@@ -26,14 +28,20 @@ public class PseudoHand : MonoBehaviour
     void Update()
     {
         bool isTraining = this._handGeneral.isTraining;
-        if(isTraining)
+        if (isTraining)
+        {
             this.pseudoHandRenderer.enabled = true;
+            OVRHandPrefab.SetActive(false);
+        }
         else
+        {
             this.pseudoHandRenderer.enabled = false;
-        
-        Vector3 handMove = this._handGeneral.handCenterPosition - this._handGeneral.handCenterPositionOrigin;
-        handMove = Vector3.Scale(handMove,new Vector3(pseudoRange,pseudoRange,pseudoRange));
-        this.pseudoHandTransform.position = _handGeneral.handCenterPositionOrigin + handMove;
+            OVRHandPrefab.SetActive(true);
+        }
+
+        Vector3 handMove = this._handGeneral.rightHandCenterPosition - this._handGeneral.rightHandCenterPositionOrigin;
+        handMove = Vector3.Scale(handMove, new Vector3(pseudoRange, pseudoRange, pseudoRange));
+        this.pseudoHandTransform.position = _handGeneral.rightHandCenterPositionOrigin + handMove;
 
 
     }
