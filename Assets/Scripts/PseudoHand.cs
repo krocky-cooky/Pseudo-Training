@@ -39,9 +39,9 @@ public class PseudoHand : MonoBehaviour
             OVRHandPrefab.SetActive(true);
         }
 
-        Vector3 handMove = this._handGeneral.rightHandCenterPosition - this._handGeneral.rightHandCenterPositionOrigin;
+        Vector3 handMove = this._handGeneral.handCenterPosition - this._handGeneral.handCenterPositionOrigin;
         handMove = Vector3.Scale(handMove, new Vector3(pseudoRange, pseudoRange, pseudoRange));
-        this.pseudoHandTransform.position = _handGeneral.rightHandCenterPositionOrigin + handMove;
+        this.pseudoHandTransform.position = _handGeneral.handCenterPositionOrigin + handMove;
 
 
     }

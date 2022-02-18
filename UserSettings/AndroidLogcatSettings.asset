@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "1WMHH827260423",
         "name": "com.DefaultCompany.oculusbuildtest",
-        "processId": 29120,
+        "processId": 30090,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -78,6 +78,18 @@
             "deviceId": "1WMHH827260423",
             "name": "com.DefaultCompany.oculusbuildtest",
             "processId": 29120,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 29523,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH827260423",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 30090,
             "exited": false
         },
         {
