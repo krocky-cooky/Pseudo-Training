@@ -8,11 +8,11 @@ public class PseudoRightHand : MonoBehaviour
     public Transform handCenter;
     public GameObject ovrCameraRig;
     public GameObject OVRHandPrefab;
+    public float pseudoRange;
+
     private Transform pseudoHandTransform;
     private MeshRenderer pseudoHandRenderer;
     private HandGeneral _handGeneral;
-
-    [SerializeField] float pseudoRange = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +38,11 @@ public class PseudoRightHand : MonoBehaviour
             this.pseudoHandRenderer.enabled = false;
             OVRHandPrefab.SetActive(true);
         }
+        //手を回転させる
+        this.pseudoHandTransform.rotation = _handGeneral.rightHandQuaternion * Quaternion.Euler(-40f, 90f, 180f);
 
         Vector3 handMove = this._handGeneral.rightHandCenterPosition - this._handGeneral.rightHandCenterPositionOrigin;
-        handMove = Vector3.Scale(handMove, new Vector3(pseudoRange, pseudoRange, pseudoRange));
-        this.pseudoHandTransform.position = _handGeneral.rightHandCenterPositionOrigin + handMove;
-
+        this.pseudoHandTransform.position = _handGeneral.rightHandCenterPositionOrigin + handMove * pseudoRange;
 
     }
 }

@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PseudoLeftHand : MonoBehaviour
+public class PseudoRightSphere : MonoBehaviour
 {
 
     public Transform handCenter;
     public GameObject ovrCameraRig;
     public GameObject OVRHandPrefab;
-    public float pseudoRange;
-
     private Transform pseudoHandTransform;
     private MeshRenderer pseudoHandRenderer;
     private HandGeneral _handGeneral;
+
+    [SerializeField] float pseudoRange = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +38,11 @@ public class PseudoLeftHand : MonoBehaviour
             this.pseudoHandRenderer.enabled = false;
             OVRHandPrefab.SetActive(true);
         }
-        //手を回転させる
-        this.pseudoHandTransform.rotation = _handGeneral.leftHandQuaternion * Quaternion.Euler(60f, -90f, 0f);
 
-        Vector3 handMove = this._handGeneral.leftHandCenterPosition - this._handGeneral.leftHandCenterPositionOrigin;
-        this.pseudoHandTransform.position = _handGeneral.leftHandCenterPositionOrigin + handMove * pseudoRange;
+        Vector3 handMove = this._handGeneral.rightHandCenterPosition - this._handGeneral.rightHandCenterPositionOrigin;
+        handMove = Vector3.Scale(handMove, new Vector3(pseudoRange, pseudoRange, pseudoRange));
+        this.pseudoHandTransform.position = _handGeneral.rightHandCenterPositionOrigin + handMove;
+
 
     }
 }

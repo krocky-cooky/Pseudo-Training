@@ -11,6 +11,7 @@ public class HandBoneDot : MonoBehaviour
     public List<FingerDot> _fingerDots;
     public enum FingerIndex { Thumb, Index, Middle, Ring, Pinky };
     public Transform handCenter;
+
     private OVRSkeleton _ovrSkeleton;
     private bool _isInitialized;
     int[,] BoneDirectionIndex = {
@@ -134,6 +135,7 @@ public class HandBoneDot : MonoBehaviour
             for (int i = 0; i < _fingerDots.Count; i++)
                 _fingerDots[i].Update();
             this.handCenter = _ovrSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_Middle1].Transform;
+
         }
         else if (_ovrSkeleton.Bones.Count > 0)
             Initialize();

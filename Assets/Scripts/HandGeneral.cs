@@ -12,9 +12,16 @@ public class HandGeneral : MonoBehaviour
     public Vector3 handCenterPositionOrigin;
     public Vector3 rightHandCenterPositionOrigin;
     public Vector3 leftHandCenterPositionOrigin;
+
+    //手の姿勢を表すクォータニオン
+    //手を水平にし、かつ手のひらを上に向けた時の姿勢を基準とする
+    public Quaternion rightHandQuaternion;
+    public Quaternion leftHandQuaternion;
+
     public GameObject rightHandPrefab, leftHandPrefab;
     public bool isTraining, trainingChangeWaiting;
     [SerializeField] float trainingStartWaitTime = 2f, trainingStopWaitTime = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +53,11 @@ public class HandGeneral : MonoBehaviour
         else if (rightHandGesture == 2 && leftHandGesture == 2 && isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStopWait(trainingStopWaitTime));
 
+
+        //手のクォータニオンを取得
+        //手の中指の付け根の骨(Middle1)のクォータニオンを、手全体のクォータニオンとする
+        rightHandQuaternion = rightHandPrefab.GetComponent<OVRSkeleton>().Bones[9].Transform.rotation;
+        leftHandQuaternion = leftHandPrefab.GetComponent<OVRSkeleton>().Bones[9].Transform.rotation;
     }
 
     IEnumerator TrainingStartWait(float waitime)
