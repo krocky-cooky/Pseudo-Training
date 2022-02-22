@@ -61,6 +61,11 @@ public class OVRHand : MonoBehaviour,
 	public TrackingConfidence HandConfidence { get; private set; }
 	public bool IsDominantHand { get; private set; }
 
+    private bool _isTraining;
+    private OVRPlugin.Vector3f _trainingBasePosition;
+    private float _pseudoRange;
+
+
 	private void Awake()
 	{
 		_pointerPoseGO = new GameObject();
@@ -94,8 +99,10 @@ public class OVRHand : MonoBehaviour,
 			IsSystemGestureInProgress = (_handState.Status & OVRPlugin.HandStatus.SystemGestureInProgress) != 0;
 			IsPointerPoseValid = (_handState.Status & OVRPlugin.HandStatus.InputStateValid) != 0;
 			IsDominantHand = (_handState.Status & OVRPlugin.HandStatus.DominantHand) != 0;
+            
 			PointerPose.localPosition = _handState.PointerPose.Position.FromFlippedZVector3f();
 			PointerPose.localRotation = _handState.PointerPose.Orientation.FromFlippedZQuatf();
+			
 			HandScale = _handState.HandScale;
 			HandConfidence = (TrackingConfidence)_handState.HandConfidence;
 
@@ -219,4 +226,17 @@ public class OVRHand : MonoBehaviour,
 
 		return data;
 	}
+
+    public void TrainingStart(float pseudoRange)
+    {
+        _isTraining = true;
+        _trainingBasePosition = _handState.RootPose.Position;
+        _pseudoRange = pseudoRange;
+    }
+
+    public void TrainingStop()
+    {
+        _isTraining = false;
+        
+    }
 }

@@ -106,6 +106,11 @@ public class OVRCameraRig : MonoBehaviour
 	protected Camera _leftEyeCamera;
 	protected Camera _rightEyeCamera;
 
+	private bool _isTraining;
+	private Vector3 _trainingBasePositionLeft;
+	private Vector3 _trainingBasePositionRight;
+	private float _pseudoRange;
+
 #region Unity Messages
 	protected virtual void Awake()
 	{
@@ -117,6 +122,7 @@ public class OVRCameraRig : MonoBehaviour
 	{
 		UpdateAnchors(true, true);
 		Application.onBeforeRender += OnBeforeRenderCallback;
+		_isTraining = false;
 	}
 
 	protected virtual void FixedUpdate()
@@ -225,9 +231,29 @@ public class OVRCameraRig : MonoBehaviour
 				Quaternion rightQuat = Quaternion.identity;
 
 				if (OVRNodeStateProperties.GetNodeStatePropertyVector3(Node.LeftHand, NodeStatePropertyType.Position, OVRPlugin.Node.HandLeft, OVRPlugin.Step.Render, out leftPos))
-					leftHandAnchor.localPosition = leftPos;
+				{
+					Vector3 position = leftPos;
+					if(_isTraining)
+					{
+						Vector3 move = position - _trainingBasePositionLeft;
+						move = move * _pseudoRange;
+						position = _trainingBasePositionLeft + move;
+					}
+					leftHandAnchor.localPosition = position;
+				}
 				if (OVRNodeStateProperties.GetNodeStatePropertyVector3(Node.RightHand, NodeStatePropertyType.Position, OVRPlugin.Node.HandRight, OVRPlugin.Step.Render, out rightPos))
-					rightHandAnchor.localPosition = rightPos;
+				{
+					Vector3 position = rightPos;
+					
+					if(_isTraining)
+					{
+						Vector3 move = position - _trainingBasePositionRight;
+						move = move * _pseudoRange;
+						position = _trainingBasePositionRight + move;
+					}
+					Debug.Log(position);
+					rightHandAnchor.localPosition = position;
+				}
 				if (OVRNodeStateProperties.GetNodeStatePropertyQuaternion(Node.LeftHand, NodeStatePropertyType.Orientation, OVRPlugin.Node.HandLeft, OVRPlugin.Step.Render, out leftQuat))
 					leftHandAnchor.localRotation = leftQuat;
 				if (OVRNodeStateProperties.GetNodeStatePropertyQuaternion(Node.RightHand, NodeStatePropertyType.Orientation, OVRPlugin.Node.HandRight, OVRPlugin.Step.Render, out rightQuat))
@@ -236,8 +262,23 @@ public class OVRCameraRig : MonoBehaviour
 			}
 			else
 			{
-				leftHandAnchor.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-				rightHandAnchor.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+
+				Vector3 rightPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+				Vector3 leftPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+				
+					
+				if(_isTraining)
+				{
+					Vector3 leftMove = leftPos - _trainingBasePositionLeft;
+					leftMove = leftMove * _pseudoRange;
+					leftPos = _trainingBasePositionLeft + leftMove;
+
+					Vector3 rightMove = rightPos - _trainingBasePositionRight;
+					rightMove = rightMove * _pseudoRange;
+					rightPos = _trainingBasePositionRight + rightMove;
+				}
+				leftHandAnchor.localPosition = leftPos;
+				rightHandAnchor.localPosition = rightPos;
 				leftHandAnchor.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
 				rightHandAnchor.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
 			}
@@ -452,5 +493,18 @@ public class OVRCameraRig : MonoBehaviour
 		Matrix4x4 ret = centerEyeAnchor.localToWorldMatrix * invHeadMatrix;
 
 		return ret;
+	}
+
+	public void TrainingStart(float pseudoRange)
+	{
+		_isTraining = true;
+		_pseudoRange = pseudoRange;
+		_trainingBasePositionLeft = leftHandAnchor.localPosition; 
+		_trainingBasePositionRight = rightHandAnchor.localPosition; 
+	}
+
+	public void TrainingEnd()
+	{
+		_isTraining = false;
 	}
 }

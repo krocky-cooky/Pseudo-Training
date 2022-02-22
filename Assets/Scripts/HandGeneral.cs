@@ -10,7 +10,7 @@ public class HandGeneral : MonoBehaviour
     public Vector3 handCenterPositionOrigin;
     public GameObject rightHandPrefab,leftHandPrefab;
     public bool isTraining,trainingChangeWaiting;
-    [SerializeField] float trainingStartWaitTime = 2f,trainingStopWaitTime = 2f;
+    [SerializeField] float trainingStartWaitTime = 2f,trainingStopWaitTime = 2f,pseudoRange = 2.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,7 @@ public class HandGeneral : MonoBehaviour
         this.leftHandGesture = -1;
         this.isTraining = false;
         this.trainingChangeWaiting = false;
+        
     }
 
     // Update is called once per frame
@@ -32,13 +33,15 @@ public class HandGeneral : MonoBehaviour
         
         this.handCenterPosition = (rightHandCenterTransform.position + leftHandCenterTransform.position)/2;
         //Debug.Log(rightHandGesture);
-        Debug.Log(new Vector2(rightHandGesture,leftHandGesture));
+        //Debug.Log(new Vector2(rightHandGesture,leftHandGesture));
         
         
         if(rightHandGesture == 0 && leftHandGesture == 0 && !isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStartWait(trainingStartWaitTime));
         else if(rightHandGesture == 2 && leftHandGesture == 2 && isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStopWait(trainingStopWaitTime));
+
+        Debug.Log(isTraining);
         
     }
 
@@ -62,6 +65,8 @@ public class HandGeneral : MonoBehaviour
         this.isTraining = true;
         handCenterPositionOrigin = handCenterPosition;
         trainingChangeWaiting = false;
+        this.GetComponent<OVRCameraRig>().TrainingStart(pseudoRange);
+        
         Debug.Log("Training start");
 
     }
@@ -82,6 +87,7 @@ public class HandGeneral : MonoBehaviour
         }
         this.isTraining = false;
         trainingChangeWaiting = false;
+        this.GetComponent<OVRCameraRig>().TrainingEnd();
         Debug.Log("Training stop");
 
     }

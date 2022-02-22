@@ -102,7 +102,7 @@ public class OVRSkeleton : MonoBehaviour
 	private List<OVRBoneCapsule> _capsules;
 
 	protected OVRPlugin.Skeleton2 _skeleton = new OVRPlugin.Skeleton2();
-	private readonly Quaternion wristFixupRotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
+	private readonly Quaternion wristFixupRotation = new Quaternion(0.0f,1.0f, 0.0f, 0.0f);
 
 	public bool IsInitialized { get; private set; }
 	public bool IsDataValid { get; private set; }
@@ -357,6 +357,7 @@ public class OVRSkeleton : MonoBehaviour
 
 			IsDataHighConfidence = data.IsDataHighConfidence;
 
+
 			if (_updateRootPose)
 			{
 				transform.localPosition = data.RootPose.Position.FromFlippedZVector3f();
@@ -367,7 +368,10 @@ public class OVRSkeleton : MonoBehaviour
 			{
 				transform.localScale = new Vector3(data.RootScale, data.RootScale, data.RootScale);
 			}
-
+			
+			
+			
+			
 			for (var i = 0; i < _bones.Count; ++i)
 			{
 				if (_bones[i].Transform != null)
@@ -387,6 +391,10 @@ public class OVRSkeleton : MonoBehaviour
 					}
 				}
 			}
+			
+			
+			
+			
 		}
 	}
 
