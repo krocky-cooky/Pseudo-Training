@@ -7,6 +7,7 @@ public class HandGeneral : MonoBehaviour
 
     private int rightHandGesture,leftHandGesture;
     public Vector3 handCenterPosition;
+    public Quaternion handCenterRotation;
     public Vector3 handCenterPositionOrigin;
     public GameObject rightHandPrefab,leftHandPrefab;
     public bool isTraining,trainingChangeWaiting;
@@ -41,7 +42,7 @@ public class HandGeneral : MonoBehaviour
         else if(rightHandGesture == 2 && leftHandGesture == 2 && isTraining && !trainingChangeWaiting)
             StartCoroutine(TrainingStopWait(trainingStopWaitTime));
 
-        Debug.Log(isTraining);
+        //Debug.Log(isTraining);
         
     }
 
