@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "1WMHH812YX0455",
         "name": "com.DefaultCompany.oculusbuildtest",
-        "processId": 25048,
+        "processId": 18108,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -24,6 +24,24 @@
             "deviceId": "1WMHH812YX0455",
             "name": "com.DefaultCompany.oculusbuildtest",
             "processId": 25048,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH812YX0455",
+            "name": "com.oculus.shellenv",
+            "processId": 14591,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH812YX0455",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 17784,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH812YX0455",
+            "name": "com.DefaultCompany.oculusbuildtest",
+            "processId": 18108,
             "exited": false
         }
     ],

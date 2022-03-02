@@ -8,13 +8,13 @@ public class WeightManipulation : MonoBehaviour
 
     [SerializeField] 
     private GameObject Weight;
-    private GameObject Camera;
+    private GameObject camObject;
 
     private HandGeneral _handGeneral;
     void Start()
     {
-        this.Camera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
-        this._handGeneral = this.Camera.GetComponent<HandGeneral>();
+        this.camObject = GameObject.FindGameObjectsWithTag("MainCamera")[0];
+        this._handGeneral = this.camObject.GetComponent<HandGeneral>();
     }
 
     // Update is called once per frame
@@ -25,6 +25,11 @@ public class WeightManipulation : MonoBehaviour
         {
             this.transform.position = this._handGeneral.handCenterPosition;
         }
-        Vector3 aim = 
+    
+        Vector3 aim = this.camObject.transform.position - this.transform.position;
+        Quaternion look = Quaternion.LookRotation(aim);
+        this.transform.rotation = look;
+        this.transform.Rotate(90.0f,90.0f,0.0f);
+
     }
 }
